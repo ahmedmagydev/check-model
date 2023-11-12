@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+   
+<!-- action -->
+    <record id="check_customer_action" model="ir.actions.act_window">
+        <field name="name">Action Name</field>
+        <field name="res_model">check.customer</field>
+        <field name="view_mode">kanban,tree,form</field>
+
+      
+    </record>
+
+    <!-- form view -->
+      
+      <record id="check_customerview_form" model="ir.ui.view">
+        <field name="name">check.customer.view.form</field>
+        <field name="model">check.customer</field>
+        <field name="arch" type="xml">
+            <form string="">
+             <header>
+
+                 
+
+                 <button name="action_draft" string="Check in" type="object" class="oe_highlight"
+                              attrs="{'invisible': [('check', '=', 'check_in')]}"  />
+                 <field name="state" widget="statusbar" statusbar_visible="draft,finish" />
+                </header>
+                <sheet>
+               
+                    <group>
+                        <group >
+                            <field name="name" />
+                            <field name="start_date" />
+
+                        </group>
+                        <group >
+                            <field name="end_date" />
+                            <field name="check" widget="statusbar" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="description">
+                            <field name="description" />
+                        </page>
+                    </notebook>
+                </sheet>
+               <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+            </form>
+        </field>
+      </record>
+
+
+
+
+<!-- tree view -->
+      <record id="check_customer_view_tree" model="ir.ui.view">
+        <field name="name">check.customer.view.tree</field>
+        <field name="model">check.customer</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="check" />
+            </tree>
+        </field>
+      </record>
+        
+
+<!-- Kanban view -->
+         <record id="view_check_customer_kanban" model="ir.ui.view">
+            <field name="name">check.customer.kanban</field>
+            <field name="model">check.customer</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_global_click">
+                                <ul>
+                                  <li>  <h1><field name="name"/></h1></li>
+                                    <li><field name="start_date"/></li>
+                                   <li> <field name="end_date"/></li>
+                                   <li> <field name="check"/></li>
+                                   <li> <field name="state"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+<!-- menuitem -->
+     <menuitem
+        id="check_route_menu"
+        name="Check"
+
+        sequence="10"/>
+        <menuitem
+            id="check_sub_menu"
+            name="Check customer"
+            action="check_customer_action"
+           
+            parent="check_route_menu"
+            sequence="10"/>
+    
+
+</odoo>
